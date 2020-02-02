@@ -1,3 +1,4 @@
+# This File have created words folder all content
 with open('wordlist') as wordlist:
     file_content = wordlist.read()
     start = file_content[0][0]
