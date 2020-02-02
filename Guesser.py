@@ -29,6 +29,10 @@ class Guesser:
         return no_of_occurrence
 
     @staticmethod
+    def give_me_max_(parm_dict): # This Function will give me the max occurrence word
+        pass
+
+    @staticmethod
     def guess(word):
         first_char = word[0]
         length_of_word = len(word)
@@ -37,30 +41,35 @@ class Guesser:
         with open(f'words/{first_char}.txt') as word_list_file:
             all_word_occurence = {}  # This dict will store that how much probability of word
             mid_point_of_param_word = 0
+            spilited_word_list_file = word_list_file.read().split('\n')
             if not Guesser.is_even(length_of_word): 
                 # Means if word of a odd length then its midpoint will be fixed
-                for word_list_word in word_list_file:
-                    pass
+                mid_point_of_param_word = round(length_of_word / 2)
+                for word_list_word in spilited_word_list_file:
+                    if len(word_list_word) > mid_point_of_param_word:
+                        no_of_occurence = Guesser.compare_words(word,word_list_word,mid_point_of_param_word)
+                        all_word_occurence.update({word_list_word:no_of_occurence})
             else:
-                for word_list_word in word_list_file:
+                for word_list_word in spilited_word_list_file:
                     """Conditioning which midpoint will be selcted. 
                     Exp In 'abcd' i can select both b and c as midpoint.
                     But i have to select which will i select"""
-                    try: # Try is used for because if word[n] don't exists
-                        word_list_word_midpoint_char = word_list_word[length_of_word / 2 - 1]
-                        if word[(length_of_word / 2) - 1] == word_list_word_char:
-                            mid_point_of_param_word = (length_of_word / 2) - 1
+                    if len(word_list_word) > int((length_of_word / 2)):
+                        mid_point_of_param_word = int((length_of_word / 2) - 1)
+                        if word[mid_point_of_param_word] == word_list_word[mid_point_of_param_word]:
                             no_of_occurence = Guesser.compare_words(word,word_list_word,mid_point_of_param_word)
-                            all_word_occurence.update(word_list_word:no_of_occurence)
+                            all_word_occurence.update({word_list_word:no_of_occurence})
                         else:
-                            word_list_word_midpoint_char = word_list_word[length_of_word / 2]
-                            mid_point_of_param_word = length_of_word / 2
+                            mid_point_of_param_word = int(length_of_word / 2)
                             no_of_occurence = Guesser.compare_words(word,word_list_word,mid_point_of_param_word)
-                    except:
-                        word_list_word_midpoint_char = word_list_word[length_of_word / 2]
-                        mid_point_of_param_word = length_of_word / 2
+                            all_word_occurence.update({word_list_word:no_of_occurence})
+                    elif len(word_list_word) > int(length_of_word / 2):
+                        mid_point_of_param_word = int(length_of_word / 2)
                         no_of_occurence = Guesser.compare_words(word,word_list_word,mid_point_of_param_word)
+                        all_word_occurence.update({word_list_word:no_of_occurence})
+            print(all_word_occurence)
 
 if __name__ == "__main__":
-    test_case_word = 'troble'
+    test_case_word = 'elephant'
+    Guesser.guess(test_case_word)
     
