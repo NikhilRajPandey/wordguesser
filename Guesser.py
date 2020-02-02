@@ -29,8 +29,13 @@ class Guesser:
         return no_of_occurrence
 
     @staticmethod
-    def give_me_max_(parm_dict): # This Function will give me the max occurrence word
-        pass
+    def give_me_max(parm_dict): # This Function will give me the max occurrence word
+        maximum_value = max(parm_dict.values())
+        maximum_values_words = []
+        for key,value in parm_dict.items():
+            if value == maximum_value:
+                maximum_values_words.append(key)
+        return maximum_values_words
 
     @staticmethod
     def guess(word):
@@ -67,9 +72,14 @@ class Guesser:
                         mid_point_of_param_word = int(length_of_word / 2)
                         no_of_occurence = Guesser.compare_words(word,word_list_word,mid_point_of_param_word)
                         all_word_occurence.update({word_list_word:no_of_occurence})
-            print(all_word_occurence)
+            return all_word_occurence
 
 if __name__ == "__main__":
-    test_case_word = 'elephant'
-    Guesser.guess(test_case_word)
+    # Testing of my program
+    test_case_word = 'abo'
+    all_word_occuren = Guesser.guess(test_case_word)
+    max_occurring_words = Guesser.give_me_max(all_word_occuren)
+    print(max_occurring_words)
+
+
     
